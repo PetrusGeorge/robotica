@@ -19,7 +19,6 @@ cleanup() {
     
     echo "Procurando processos ROS para terminar..."
     
-    # Método mais seguro: listar processos e matar apenas os específicos
     for cmd in "${ros_commands[@]}"; do
         # Encontrar PIDs dos processos específicos
         pids=$(ps aux | grep "$cmd" | grep -v grep | awk '{print $2}')
@@ -34,7 +33,7 @@ cleanup() {
         fi
     done
     
-    # Matar sessão Tmux ANTIGA (se existir)
+    # Matar sessão Tmux
     echo "Verificando sessão Tmux antiga..."
     if $TMUX has-session -t $SESSION_NAME 2>/dev/null; then
         echo "  Matando sessão Tmux anterior: $SESSION_NAME"

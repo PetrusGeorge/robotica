@@ -19,7 +19,6 @@ def generate_launch_description():
         default_value=os.path.join(pkg_share, 'maps', 'class_map.yaml'),
         description='Full path to map yaml file'
     )
-    print(os.path.join(pkg_share, 'maps', 'class_map.yaml'))
 
     declare_use_sim_time = DeclareLaunchArgument(
         'use_sim_time',
