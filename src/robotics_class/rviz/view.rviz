@@ -5,9 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Grid1
         - /Map1/Topic1
-        - /Map2
       Splitter Ratio: 0.5
     Tree Height: 1022
   - Class: rviz_common/Selection
@@ -47,7 +45,7 @@ Visualization Manager:
         Z: 0
       Plane: XY
       Plane Cell Count: 30
-      Reference Frame: odom
+      Reference Frame: <Fixed Frame>
       Value: true
     - Alpha: 1
       Class: rviz_default_plugins/RobotModel
@@ -328,25 +326,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 13.578182220458984
+      Distance: 12.53955078125
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 4.258338928222656
-        Y: 4.896996974945068
-        Z: 2.014209270477295
+        X: 4.148329734802246
+        Y: 4.2765631675720215
+        Z: 1.7466380596160889
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.4397964477539062
+      Pitch: 1.0747969150543213
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.0903799533843994
+      Yaw: 2.0703775882720947
     Saved: ~
 Window Geometry:
   Displays:

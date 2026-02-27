@@ -57,7 +57,7 @@ create_tmux_window 3 "EKF" 6 "ros2 launch robotics_class ekf.launch.py"
 create_tmux_window 4 "Localization" 8 "ros2 launch robotics_class localization.launch.py"
 create_tmux_window 5 "RViz" 15 "ros2 launch robotics_class rviz.launch.py"
 # create_tmux_window 6 "SLAM" 20 "ros2 launch robotics_class slam.launch.py"
-create_tmux_window 6 "Navigation" 20 "ros2 launch robotics_class navigation_launch.py"
+create_tmux_window 6 "Navigation" 20 "ros2 launch robotics_class navigation.launch.py"
 
 # Janela de monitoramento/controle
 $TMUX new-window -t $SESSION_NAME:7 -n 'Control'
