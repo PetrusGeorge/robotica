@@ -7,7 +7,7 @@ echo "========================================="
 # Configurações
 WORKSPACE_DIR="$HOME/ros2_ws"
 
-# # Executar limpeza
+# Executar limpeza
 source ./cleanup.sh
 
 # Build
@@ -51,13 +51,13 @@ create_tmux_window() {
 
 # Criar janelas com delays progressivos
 create_tmux_window 0 "Robot_Desc" 0 "ros2 launch robotics_class robot_description.launch.py"
-create_tmux_window 1 "Simulation" 3 "ros2 launch robotics_class simulation_world.launch.py"
-create_tmux_window 2 "EKF" 6 "ros2 launch robotics_class ekf.launch.py"
-create_tmux_window 3 "RViz" 8 "ros2 launch robotics_class rviz.launch.py"
-create_tmux_window 4 "Teleop" 10 "ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=jetauto/cmd_vel"
-create_tmux_window 5 "Navigation" 15 "ros2 launch nav2_bringup navigation_launch.py"
+create_tmux_window 1 "Teleop" 0 "ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=jetauto/cmd_vel"
+create_tmux_window 2 "Simulation" 3 "ros2 launch robotics_class simulation_world.launch.py"
+create_tmux_window 3 "EKF" 6 "ros2 launch robotics_class ekf.launch.py"
+create_tmux_window 4 "Localization" 8 "ros2 launch robotics_class localization.launch.py"
+create_tmux_window 5 "RViz" 15 "ros2 launch robotics_class rviz.launch.py"
 # create_tmux_window 6 "SLAM" 20 "ros2 launch robotics_class slam.launch.py"
-create_tmux_window 6 "Localization" 20 "ros2 launch robotics_class localization.launch.py"
+create_tmux_window 6 "Navigation" 20 "ros2 launch robotics_class navigation_launch.py"
 
 # Janela de monitoramento/controle
 $TMUX new-window -t $SESSION_NAME:7 -n 'Control'

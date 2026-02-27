@@ -14,6 +14,8 @@ install(DIRECTORY
   rviz
   worlds
   params
+  behavior_trees
+  maps
 	DESTINATION share/${PROJECT_NAME}
 )
 
