@@ -1,32 +1,3 @@
-behavior_server:
-  ros__parameters:
-    use_sim_time: True
-    local_costmap_topic: local_costmap/costmap_raw
-    local_footprint_topic: local_costmap/published_footprint
-    global_costmap_topic: global_costmap/costmap_raw
-    global_footprint_topic: global_costmap/published_footprint
-    cycle_frequency: 10.0
-    behavior_plugins: ["spin", "backup", "drive_on_heading", "wait", "assisted_teleop"]
-    spin:
-      plugin: "nav2_behaviors/Spin" # In Iron and older versions, "/" was used instead of "/"
-    backup:
-      plugin: "nav2_behaviors/BackUp" # In Iron and older versions, "/" was used instead of "/"
-    drive_on_heading:
-      plugin: "nav2_behaviors/DriveOnHeading" # In Iron and older versions, "/" was used instead of "/"
-    wait:
-      plugin: "nav2_behaviors/Wait" # In Iron and older versions, "/" was used instead of "/"
-    assisted_teleop:
-      plugin: "nav2_behaviors/AssistedTeleop" # In Iron and older versions, "/" was used instead of "/"
-    local_frame: odom
-    global_frame: map
-    robot_base_frame: base_footprint
-    transform_tolerance: 0.1
-    simulate_ahead_time: 2.0
-    max_rotational_vel: 1.0
-    min_rotational_vel: 0.4
-    rotational_acc_lim: 3.2
-    enable_stamped_cmd_vel: true  # default false in Jazzy or older
-
 bt_navigator:
   ros__parameters:
     use_sim_time: True
@@ -61,28 +32,15 @@ bt_navigator:
     plugin_lib_names:
       - nav2_compute_path_to_pose_action_bt_node
       - nav2_follow_path_action_bt_node
-      - nav2_back_up_action_bt_node
       - nav2_spin_action_bt_node
       - nav2_wait_action_bt_node
       - nav2_clear_costmap_service_bt_node
-      - nav2_is_stuck_condition_bt_node
-      # - nav2_is_stopped_condition_bt_node
-      - nav2_goal_reached_condition_bt_node
-      - nav2_initial_pose_received_condition_bt_node
       - nav2_goal_updated_condition_bt_node
-      - nav2_reinitialize_global_localization_service_bt_node
       - nav2_rate_controller_bt_node
-      - nav2_distance_controller_bt_node
-      - nav2_speed_controller_bt_node
       - nav2_recovery_node_bt_node
       - nav2_pipeline_sequence_bt_node
-      # - nav2_persistent_sequence_bt_node
-      # - nav2_pause_resume_controller_bt_node
       - nav2_round_robin_node_bt_node
-      - nav2_transform_available_condition_bt_node
-      - nav2_time_expired_condition_bt_node
-      - nav2_distance_traveled_condition_bt_node
-      - nav2_single_trigger_bt_node
+      - nav2_back_up_action_bt_node
     error_code_name_prefixes:
       - assisted_teleop
       - backup
@@ -96,6 +54,35 @@ bt_navigator:
       - route
       - undock_robot
       - wait
+
+behavior_server:
+  ros__parameters:
+    use_sim_time: True
+    local_costmap_topic: local_costmap/costmap_raw
+    local_footprint_topic: local_costmap/published_footprint
+    global_costmap_topic: global_costmap/costmap_raw
+    global_footprint_topic: global_costmap/published_footprint
+    cycle_frequency: 10.0
+    behavior_plugins: ["spin", "backup", "drive_on_heading", "wait", "assisted_teleop"]
+    spin:
+      plugin: "nav2_behaviors/Spin" # In Iron and older versions, "/" was used instead of "/"
+    backup:
+      plugin: "nav2_behaviors/BackUp" # In Iron and older versions, "/" was used instead of "/"
+    drive_on_heading:
+      plugin: "nav2_behaviors/DriveOnHeading" # In Iron and older versions, "/" was used instead of "/"
+    wait:
+      plugin: "nav2_behaviors/Wait" # In Iron and older versions, "/" was used instead of "/"
+    assisted_teleop:
+      plugin: "nav2_behaviors/AssistedTeleop" # In Iron and older versions, "/" was used instead of "/"
+    local_frame: odom
+    global_frame: map
+    robot_base_frame: base_footprint
+    transform_tolerance: 0.1
+    simulate_ahead_time: 2.0
+    max_rotational_vel: 1.0
+    min_rotational_vel: 0.4
+    rotational_acc_lim: 3.2
+    enable_stamped_cmd_vel: true  # default false in Jazzy or older
 
 global_costmap:
   global_costmap:
@@ -195,11 +182,11 @@ controller_server:
       batch_size: 2000
       vx_std: 0.2
       vy_std: 0.2
-      wz_std: 0.4
+      wz_std: 3.0
       vx_max: 0.5
       vx_min: -0.35
-      vy_max: 0.5
-      wz_max: 1.9
+      vy_max: 2.0
+      wz_max: 30.0
       ax_max: 3.0
       ax_min: -3.0
       ay_min: -3.0
