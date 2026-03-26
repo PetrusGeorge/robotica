@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="depth_camera" xmlns:xacro="http://ros.org/wiki/xacro" >
+  <xacro:property name="M_PI"   value="3.1415926535897931"/>
+  <link
+    name="depth_cam_link">
+    <inertial>
+      <origin
+        xyz="0.000254340878565573 0.00268031633059271 -0.00569075323067275"
+        rpy="0 0 0" />
+      <mass
+        value="0.227980406655671" />
+      <inertia
+        ixx="4.8473190489023E-05"
+        ixy="8.29314946303069E-09"
+        ixz="-5.0952649884666E-09"
+        iyy="0.000408820027771005"
+        iyz="-1.36580074559918E-07"
+        izz="0.000429553467348926" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 1.57" />
+      <geometry>
+        <mesh
+          filename="package://robotics_subject/models/jetauto/depth_camera_link.stl" />
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 1.57" />
+      <geometry>
+        <mesh
+          filename="package://robotics_subject/models/jetauto/depth_camera_link_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint1"
+    type="fixed">
+    <origin
+      xyz="0.0288581470059471 0 0.202093286991617"
+      rpy="-0.000131510931722419 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="depth_cam_link" />
+  </joint>
+  <link name="depth_cam_frame" />
+  <joint
+    name="depth_cam_joint_sim"
+    type="fixed">
+    <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+    <parent link="depth_cam_link" />
+    <child link="depth_cam_frame" />
+  </joint>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       RGB Camera Gazebo Plugin
+       Publica: /jetauto/camera/image_raw  (sensor_msgs/Image)
+                /jetauto/camera/camera_info
+       Usada pelo color_detector_node para reconhecimento de cores.
+       Padrão de remapping idêntico ao lidar/IMU do projeto.
+  ════════════════════════════════════════════════════════════════════ -->
+  <gazebo reference="depth_cam_link">
+    <sensor type="camera" name="rgb_camera_sensor">
+      <always_on>true</always_on>
+      <update_rate>30</update_rate>
+      <visualize>true</visualize>
+      <camera name="rgb">
+        <!-- 80° horizontal FOV – bom para detectar paredes laterais -->
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>10.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.005</stddev>
+        </noise>
+      </camera>
+      <plugin name="gazebo_ros_camera" filename="libgazebo_ros_camera.so">
+        <ros>
+          <namespace>/jetauto/camera</namespace>
+        </ros>
+        <frame_name>depth_cam_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>
