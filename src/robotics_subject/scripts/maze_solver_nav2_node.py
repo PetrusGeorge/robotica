@@ -107,36 +107,6 @@ def inflate_grid(grid: np.ndarray, lethal_thresh: int,
     result[inflate_mask] = 100
     return result
 
-
-def snap_to_free(grid: np.ndarray, cell: Tuple[int, int],
-                 lethal_thresh: int, max_radius: int = 30) -> Tuple[int, int]:
-    """BFS para célula livre mais próxima se cell for letal."""
-    rows, cols = grid.shape
-
-    def free(c, r):
-        return 0 <= c < cols and 0 <= r < rows and 0 <= int(grid[r, c]) <= lethal_thresh
-
-    if free(*cell):
-        return cell
-
-    visited = set()
-    heap = [(0.0, *cell)]
-    while heap:
-        d, c, r = heapq.heappop(heap)
-        if (c, r) in visited:
-            continue
-        visited.add((c, r))
-        if free(c, r):
-            return (c, r)
-        if d > max_radius:
-            break
-        for dc, dr, step in _DIRS8:
-            nb = (c + dc, r + dr)
-            if nb not in visited:
-                heapq.heappush(heap, (d + step, *nb))
-    return cell
-
-
 def los_clear(grid: np.ndarray, c0: int, r0: int,
               c1: int, r1: int, lethal_thresh: int) -> bool:
     """Bresenham: True se a linha c0,r0 → c1,r1 não cruza célula letal."""
@@ -281,7 +251,7 @@ class MazeNav2Node(Node):
         super().__init__('maze_nav2')
 
         self.declare_parameter('startup_wall_dist',     2.00)
-        self.declare_parameter('startup_lin_speed',     0.18)
+        self.declare_parameter('startup_lin_speed',     0.36)
         self.declare_parameter('open_area_thresh',      2.50)
         self.declare_parameter('waypoint_dist',         0.60)
         self.declare_parameter('prefer_right',          True)
@@ -528,12 +498,6 @@ class MazeNav2Node(Node):
 
         start_g = self._w2g(info, rx, ry)
         goal_g  = self._w2g(info, goal_wx, goal_wy)
-
-        if not (0 <= start_g[0] < info.width and 0 <= start_g[1] < info.height
-                and 0 <= int(astar_grid[start_g[1], start_g[0]]) <= self.lethal_thresh):
-            start_g = snap_to_free(astar_grid, start_g, self.lethal_thresh, 15)
-
-        goal_g = snap_to_free(astar_grid, goal_g, self.lethal_thresh, 30)
 
         if not reachable(astar_grid, start_g, goal_g, self.lethal_thresh):
             return None
